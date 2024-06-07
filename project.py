@@ -3,18 +3,16 @@ def ToBinaryN(num):
     binary_after_not = Not(binary_positive)
     add = 1
     negative_binary = ""
-    for num in binary_after_not[::-1]:
+    for bit in binary_after_not:
         if add == 1:
-            if num == "1":
+            if bit == "1":
                 negative_binary = "0" + negative_binary
             else:
                 negative_binary = "1" + negative_binary
                 add = 0
         else:
-            if num == "1":
-                negative_binary = "1" + negative_binary
-            else:
-                negative_binary = "0" + negative_binary
+            negative_binary = bit + negative_binary
+            
     negative_binary = "1" + negative_binary
     return negative_binary
 
@@ -22,19 +20,15 @@ def ToBinaryN(num):
 def ToBinary(num, index):
     if index == -1:
         return ""
-    if 2**index <= num:
-        return "1" + ToBinary(num - 2**index, index-1)
-    return "0" + ToBinary(num, index - 1)
+    what_bit = int(2**index <= num)
+    return str(what_bit) + ToBinary(num - 2**index*what_bit, index-1)
 
 
 def Not(binary):
     final_binary = ""
-    for num in binary:
-        if num == "0":
-            final_binary += "1"
-        else:
-            final_binary += "0"
-    return final_binary
+    for bit in binary:
+        final_binary += str(int(bit == "0"))
+    return final_binary[::-1]
 
 
 print(ToBinaryN(32))
