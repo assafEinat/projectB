@@ -1,9 +1,12 @@
+BITS_NEEDED = 8
+
+
 def ToBinaryN(num):
-    binary_positive = ToBinary(num, 6)
-    binary_after_not = Not(binary_positive)
+    index = num.bit_length()
+    binary_positive_and_not = ToBinary(num, BITS_NEEDED-2)
     add = 1
     negative_binary = ""
-    for bit in binary_after_not:
+    for bit in binary_positive_and_not[::-1]:
         if add == 1:
             if bit == "1":
                 negative_binary = "0" + negative_binary
@@ -20,15 +23,10 @@ def ToBinaryN(num):
 def ToBinary(num, index):
     if index == -1:
         return ""
-    what_bit = int(2**index <= num)
-    return str(what_bit) + ToBinary(num - 2**index*what_bit, index-1)
+    what_bit = pow(2,index) <= num
+    return str(int(not what_bit)) + ToBinary(num - 2**index*int(what_bit), index-1)
+
+if __name__ =="__main__":
+    print(ToBinaryN(34))
 
 
-def Not(binary):
-    final_binary = ""
-    for bit in binary:
-        final_binary += str(int(bit == "0"))
-    return final_binary[::-1]
-
-
-print(ToBinaryN(32))
