@@ -37,9 +37,14 @@ def scan_for_virus(directory, infected_files):
                     if 'data' in result and 'id' in result['data']:
                         analysis_id = result['data']['id']
                         analysis_result = get_analysis_results(analysis_id)
-                        if analysis_result['data']['attributes']['stats']['malicious'] > 0:
+
+                        if 'data' in analysis_result and 'attributes' in analysis_result['data'] and 'stats' in \
+                                analysis_result['data']['attributes']:
+                            if analysis_result['data']['attributes']['stats']['malicious'] > 0:
                                 infected_files.append(path)
                                 print(f"Malicious file detected: {path}")
+                        else:
+                            print(f"Unexpected response format for file {path}: {analysis_result}")
                     else:
                         print(f"Unexpected response format for file {path}: {result}")
 
