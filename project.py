@@ -27,6 +27,6 @@ def ToBinary(num, index):
     return str(int(not what_bit)) + ToBinary(num - 2**index*int(what_bit), index-1)
 
 if __name__ =="__main__":
-    print(ToBinaryN(34))
+    print(ToBinaryN(42))
 
 
